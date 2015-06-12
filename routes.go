@@ -74,6 +74,8 @@ func router(w http.ResponseWriter, r *http.Request) {
 		typeH(w, r)
 	case r.URL.Path == "/method" && (accept == web.V1JSON || latest):
 		method(w, r)
+    case r.URL.Path == "/charts":
+        charts(w, r)
 	case strings.HasPrefix(r.URL.Path, apidoc.Path):
 		docs.Serve(w, r)
 	default:
