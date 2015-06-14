@@ -19,7 +19,7 @@ func networkH(w http.ResponseWriter, r *http.Request) {
     var d string
 
     err := db.QueryRow(
-    `select row_to_json(fc) from (select array_to_json(array_agg(t)) as netwoek
+    `select row_to_json(fc) from (select array_to_json(array_agg(t)) as network
         from (select networkid as "networkID", description from fits.network) as t) as fc`).Scan(&d)
     if err != nil {
         web.ServiceUnavailable(w, r, err)

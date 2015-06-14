@@ -76,6 +76,7 @@ var ldrChartClient = {
         if(showMap){
             this.initFormFunctions();
             this.initBaseMap();
+            this.showNetworks();
             this.showRegions();
             this.showParams();
         }else{//show sigle site chart
@@ -373,6 +374,41 @@ var ldrChartClient = {
 
      },
 
+
+      /* show regions in map */
+       showNetworks: function() {
+        //
+          if(this.networksData){
+              this.populateNetworksSelect(this.networksData);
+          }else{
+              this.queryNetworks();
+          }
+        },
+
+      /***
+      * query regions from http
+      * ***/
+      queryNetworks: function() {
+          var _url = "/network"
+          jQuery.getJSON(_url, function (data) {
+          //console.log(JSON.stringify(data));
+             ldrChartClient.networksData = data;
+             ldrChartClient.populateNetworksSelect(data);
+          });
+      },
+
+       /* populate networks select field */
+       populateNetworksSelect: function(networksJason) {
+         $('#selnetwork').children().remove(); //remove existing items
+         var networks = networksJason.network;
+         //console.log("networks " + JSON.stringify(networks));
+         for (var i = 0, len = networks.length; i < len; i++) {
+             var network = networks[i];
+             $('#selnetwork').append('<option value=' + network["networkID"] + '>' + network["networkID"] + '</option>');
+         }
+       },
+
+
      /* show regions in map */
       showParams: function() {
          //
@@ -423,6 +459,7 @@ var ldrChartClient = {
             ldrChartClient.showRegionsMap(data);
         });
     },
+
     
     /***
 	 * query sites from http
