@@ -72,6 +72,8 @@ func router(w http.ResponseWriter, r *http.Request) {
 		}
 	case r.URL.Path == "/type" && (accept == web.V1JSON || latest):
 		typeH(w, r)
+    case r.URL.Path == "/network" && (accept == web.V1JSON || latest):
+        networkH(w, r)
 	case r.URL.Path == "/method" && (accept == web.V1JSON || latest):
 		method(w, r)
     case r.URL.Path == "/charts":
